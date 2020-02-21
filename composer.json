@@ -1,5 +1,5 @@
 {
-    "name": "peelvalley/emailqueue",
+    "name": "peelvalley/uf_emailqueue",
     "description": "An Email Queuing Sprinkle for the Userfrosting Framework",
     "type": "userfrosting-sprinkle",
     "license": "MIT",
@@ -22,5 +22,8 @@
         "psr-4": {
             "UserFrosting\\Sprinkle\\EmailQueue\\": "src/"
         }
+    },
+    "extra": {
+        "installer-name": "CampaignMan"
     }
 }
