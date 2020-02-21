@@ -24,6 +24,6 @@
         }
     },
     "extra": {
-        "installer-name": "CampaignMan"
+        "installer-name": "EmailQueue"
     }
 }
