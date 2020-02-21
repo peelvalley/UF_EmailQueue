@@ -1,0 +1,70 @@
+{# This partial template renders a table of users, to be populated with rows via an AJAX request.
+ # This extends a generic template for paginated tables.
+ #
+ # Note that this template contains a "skeleton" table with an empty table body, and then a block of Handlebars templates which are used
+ # to render the table cells with the data from the AJAX request.
+#}
+
+{% extends "tables/table-paginated.html.twig" %}
+
+{% block table %}
+    <table id="{{table.id}}" class="tablesorter table table-bordered table-hover table-striped" data-sortlist="{{table.sortlist}}">
+        <thead>
+            <tr>
+                <th class="sorter-metatext" data-column-name="to_email" data-column-template="#mq-table-column-to-email" data-priority="1">To Email</th>
+                <th class="sorter-metatext" data-column-name="to_name" data-column-template="#mq-table-column-to-name" data-priority="1">To Name</th>
+                <th data-column-name="error" data-sorter="false" data-filter="false"  data-column-template="#mq-table-column-error" data-priority="1">Error</th>
+                <th data-column-name="trace" data-sorter="false" data-filter="false"  data-column-template="#mq-table-column-trace" data-priority="1">Trace</th>
+                <th data-column-name="actions" data-column-template="#mq-table-column-actions" data-sorter="false" data-filter="false" data-priority="1">{{translate("ACTIONS")}}</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block table_cell_templates %}
+    {# This contains a series of <script> blocks, each of which is a client-side Handlebars template.
+     # Note that these are NOT Twig templates, although the syntax is similar.  We wrap them in the `verbatim` tag,
+     # so that Twig will output them directly into the DOM instead of trying to treat them like Twig templates.
+     #
+     # These templates require handlebars-helpers.js, moment.js
+    #}
+    {% verbatim %}
+    <script id="mq-table-column-to-email" type="text/x-handlebars-template">
+        <td data-text="{{row.to_email}}">
+            <span>
+               {{row.to_email}}
+            </span>
+        </td>
+    </script>
+     <script id="mq-table-column-to-name" type="text/x-handlebars-template">
+        <td data-text="{{row.to_name}}">
+            <span>
+               {{row.to_name}}
+            </span>
+        </td>
+    </script>
+    <script id="mq-table-column-error" type="text/x-handlebars-template">
+        <td>
+            <span>Filename: {{row.metadata.file}}</span>
+            <span>Line: {{row.metadata.line}}</span>
+            <pre>{{row.metadata.error}}</pre>
+        </td>
+    </script>
+    <script id="mq-table-column-trace" type="text/x-handlebars-template">
+        <td>
+            <pre>{{row.metadata.trace}}</pre>
+        </td>
+    </script>
+    <script id="mq-table-column-actions" type="text/x-handlebars-template">
+        <td class="uf-table-fit-width">
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">{% endverbatim %}{{translate("ACTIONS")}}{% verbatim %}<span class="caret"></span></button>
+                <ul class="dropdown-menu dropdown-menu-right-responsive" role="menu">
+                </ul>
+            </div>
+        </td>
+    </script>
+    {% endverbatim %}
+{% endblock %}

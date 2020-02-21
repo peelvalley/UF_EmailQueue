@@ -1,0 +1,53 @@
+{% extends "pages/abstract/dashboard.html.twig" %}
+
+{% block stylesheets_page %}
+    <!-- Page-specific CSS asset bundle -->
+    {{ assets.css('css/form-widgets') | raw }}
+{% endblock %}
+
+{# Overrides blocks in head of base template #}
+{% block page_title %}{{ translate('MAILING_QUEUE')}}{% endblock %}
+
+{% block page_description %}{{ translate('MAILING_QUEUE.PAGE_DESCRIPTION')}}{% endblock %}
+
+{% block body_matter %}
+    <div class="row">
+        <div class="col-md-12">
+            <div id="widget-mailing-queue" class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title pull-left"><i class="fas fa-fw fa-list"></i> {{translate('MAILING_QUEUE')}}</h3>
+                    {% include "tables/table-tool-menu.html.twig" %}
+                </div>
+                <div class="box-body">
+                    {% include "EmailQueue/tables/mailing-queue.html.twig" with {
+                            "table" : {
+                                "id" : "table-mailing-queue"
+                            }
+                        }
+                    %}
+                </div>
+                {% if checkAccess('clear_mailing_queue') %}
+                <div class="box-footer">
+                    <button type="button" class="btn btn-danger js-mq-clear">
+                        <i class="fas fa-ban"></i>  {{ translate("MAILING_QUEUE.CLEAR")}}
+                    </button>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block scripts_page %}
+    <!-- Include validation rules -->
+    <script>
+    {% include "pages/partials/page.js.twig" %}
+        const group = undefined
+    </script>
+
+    <!-- Include form widgets JS -->
+    {{ assets.js('js/form-widgets') | raw }}
+
+    <!-- Include page-specific JS -->
+    {{ assets.js('js/pages/mailing-queue') | raw }}
+
+{% endblock %}
