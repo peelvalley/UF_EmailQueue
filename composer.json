@@ -17,5 +17,10 @@
     },
     "require": {
         "peelvalley/fortress": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "UserFrosting\\Sprinkle\\CampaignMan\\": "src/"
+        }
     }
 }
