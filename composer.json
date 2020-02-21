@@ -20,7 +20,7 @@
     },
     "autoload": {
         "psr-4": {
-            "UserFrosting\\Sprinkle\\CampaignMan\\": "src/"
+            "UserFrosting\\Sprinkle\\EmailQueue\\": "src/"
         }
     }
 }
