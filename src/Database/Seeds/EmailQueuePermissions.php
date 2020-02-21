@@ -31,11 +31,11 @@ class EmailQueuePermissions extends BaseSeed
     protected function getPermissions()
     {
         return [
-            '' => new Permission([
-                'slug' => '',
-                'name' => '',
-                'conditions' => '',
-                'description' => ''
+            'view_mailing_queue' => new Permission([
+                'slug' => 'view_mailing_queue',
+                'name' => 'View mailing queue contents',
+                'conditions' => 'always()',
+                'description' => 'Enables user to view mailing queue contents'
             ]),
 
         ];
@@ -72,7 +72,7 @@ class EmailQueuePermissions extends BaseSeed
         $roleSiteAdmin = Role::where('slug', 'site-admin')->first();
         if ($roleSiteAdmin) {
             $roleSiteAdmin->permissions()->syncWithoutDetaching([
-                $permissions['']->id
+                $permissions['view_mailing_queue']->id
             ]);
         }
     }
