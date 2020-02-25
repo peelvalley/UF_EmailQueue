@@ -9,15 +9,6 @@
             "email": "phillmac@users.noreply.github.com"
         }
     ],
-    "repositories": {
-        "peelvalley.fortress": {
-            "type": "git",
-            "url": "https://github.com/peelvalley/fortress.git"
-        }
-    },
-    "require": {
-        "peelvalley/fortress": "dev-master"
-    },
     "autoload": {
         "psr-4": {
             "UserFrosting\\Sprinkle\\EmailQueue\\": "src/"
