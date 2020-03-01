@@ -12,7 +12,7 @@ use UserFrosting\Sprinkle\Core\Mail\EmailRecipient as CoreEmailRecipient;
  *
  * @author Alex Weissman (https://alexanderweissman.com)
  */
-class EmailRecipient extends CoreEmailRecipient implements JsonSerializable
+class EmailRecipient extends CoreEmailRecipient implements \JsonSerializable
 {
 
     public function jsonSerialize() {
