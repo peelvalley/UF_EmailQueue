@@ -2,8 +2,8 @@
     "bundle": {
         "js/pages/mailing-queue": {
             "scripts": [
-                "CampaignMan/js/pages/mailing-queue.js",
-                "CampaignMan/js/widgets/mailing-queue.js"
+                "EmailQueue/js/pages/mailing-queue.js",
+                "EmailQueue/js/widgets/mailing-queue.js"
             ],
             "options": {
                 "result": {
