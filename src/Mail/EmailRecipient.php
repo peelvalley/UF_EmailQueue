@@ -43,6 +43,7 @@ class EmailRecipient extends CoreEmailRecipient implements \JsonSerializable
         foreach ($data['bcc'] as $bcc) {
             $recipient->bcc($bcc['email'], $bcc['name']);
         }
+        return $recipient;
     }
 
 }
