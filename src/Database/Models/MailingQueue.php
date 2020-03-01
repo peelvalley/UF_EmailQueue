@@ -18,6 +18,8 @@ class MailingQueue extends Model
         'template',
         'to',
         'from',
+        'cc',
+        'bcc',
         'data',
         'metadata',
         'metadata->error',
@@ -38,6 +40,8 @@ class MailingQueue extends Model
     protected $casts = [
         'to' => 'array',
         'from' => 'array',
+        'cc' => 'array',
+        'bcc' => 'array',
         'data' => 'array',
         'metadata' => 'array',
         'attachments' => 'array'
