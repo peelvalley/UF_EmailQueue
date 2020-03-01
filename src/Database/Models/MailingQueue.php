@@ -5,6 +5,7 @@ namespace UserFrosting\Sprinkle\EmailQueue\Database\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use UserFrosting\Sprinkle\Core\Database\Models\Model;
+Use UserFrosting\Sprinkle\EmailQueue\Mail\EmailRecipient;
 
 
 class MailingQueue extends Model
@@ -16,10 +17,8 @@ class MailingQueue extends Model
 
     protected $fillable = [
         'template',
-        'to',
         'from',
-        'cc',
-        'bcc',
+        'recipients',
         'data',
         'metadata',
         'metadata->error',
@@ -38,16 +37,35 @@ class MailingQueue extends Model
     protected $dates = [];
 
     protected $casts = [
-        'to' => 'array',
+        'recipients' => 'array',
         'from' => 'array',
-        'cc' => 'array',
-        'bcc' => 'array',
         'data' => 'array',
         'metadata' => 'array',
         'attachments' => 'array'
     ];
 
-    public function getEmailAttribute() {
-        return $this->to[0];
+
+
+    /**
+     * Add a recipient.
+     *
+     * @param EmailRecipient $to
+     */
+    public function addRecipient(EmailRecipient $to)
+    {
+        $serialised = json_encode($to);
+        MailingQueue::find($this->id)->update([
+            'recipients' => DB::raw("JSON_ARRAY_APPEND(`recipients`, '$', '$serialised');")
+        ]);
+    }
+
+    /**
+     * Get all recipient.
+     */
+    public function getRecipients(EmailRecipient $to)
+    {
+        return array_map(function ($r) {
+            EmailRecipient::fromData($r);
+        }, $this->recipients);
     }
 }

@@ -17,10 +17,8 @@ class MailingQueueTable extends Migration
             $this->schema->create('mailing_queue', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('template', 255);
-                $table->json('to');
+                $table->json('recipients')->nullable();
                 $table->json('from')->nullable();
-                $table->json('cc')->nullable();
-                $table->json('bcc')->nullable();
                 $table->json('data')->nullable();
                 $table->json('metadata')->nullable();
                 $table->json('attachments')->nullable();

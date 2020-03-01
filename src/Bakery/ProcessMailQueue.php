@@ -50,25 +50,28 @@ class ProcessMailQueue extends BaseCommand
             try {
                 // Create and send email
                 $message = (new TwigMailMessage($this->ci->view, $mailItem->template))
-                        ->from($mailItem->from ? [
-                            'email' => $mailItem->from['email'],
-                            'name' => $mailItem->from['name']
+                    ->from($mailItem->from ? [
+                        'email' => $mailItem->from['email'],
+                        'name' => $mailItem->from['name']
 
-                        ] : $config['address_book.admin'])
-                        ->addEmailRecipient(new EmailRecipient($mailItem->to_email, $mailItem->to_name))
-                        ->addParams(
-                            array_merge($mailItem->data, ... array_map(function ($paramInfo) use ($classMapper) {
-                                    return [
-                                        $paramInfo['paramName'] => call_user_func_array(
-                                            array(
-                                                $classMapper,
-                                                $paramInfo['function']),
-                                            $paramInfo['functionParams']
-                                            )
-                                    ];
-                                }, $mailItem->data['params']) ?? []
-                            )
+                    ] : $config['address_book.admin'])
+                    ->addParams(
+                        array_merge($mailItem->data, ... array_map(function ($paramInfo) use ($classMapper) {
+                                return [
+                                    $paramInfo['paramName'] => call_user_func_array(
+                                        array(
+                                            $classMapper,
+                                            $paramInfo['function']),
+                                        $paramInfo['functionParams']
+                                        )
+                                ];
+                            }, $mailItem->data['params']) ?? []
+                        )
                     );
+
+                foreach ($mailItem->getRecipients() as $recipient) {
+                    $message >addEmailRecipient($recipient);
+                }
 
                 foreach ($mailItem->attachments as $attachment) {
                     if ($attachment['type'] == 'pdf') {
