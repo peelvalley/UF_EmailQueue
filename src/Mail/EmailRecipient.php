@@ -27,7 +27,7 @@ class EmailRecipient extends CoreEmailRecipient implements \JsonSerializable
 
     public static function fromData ($data) {
         if (is_string($data)) {
-            $data = json_decode($data, false);
+            $data = json_decode($data, true);
         }
 
         $recipient = new EmailRecipient(
