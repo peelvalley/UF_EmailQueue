@@ -1,0 +1,20 @@
+{
+    "bundle": {
+        "js/pages/mailing-queue": {
+            "scripts": [
+                "CampaignMan/js/pages/mailing-queue.js",
+                "CampaignMan/js/widgets/mailing-queue.js"
+            ],
+            "options": {
+                "result": {
+                    "type": {
+                        "scripts": "plain"
+                    }
+                },
+                "sprinkle": {
+                    "onCollision": "merge"
+                }
+            }
+        }
+    }
+}
