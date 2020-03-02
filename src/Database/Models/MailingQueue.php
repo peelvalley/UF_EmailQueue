@@ -6,7 +6,7 @@ namespace UserFrosting\Sprinkle\EmailQueue\Database\Models;
 use Illuminate\Database\Eloquent\Builder;
 use UserFrosting\Sprinkle\Core\Database\Models\Model;
 Use UserFrosting\Sprinkle\EmailQueue\Mail\EmailRecipient;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Capsule\Manager as Capsule;
 
 
 class MailingQueue extends Model
@@ -55,9 +55,12 @@ class MailingQueue extends Model
     public function addRecipient(EmailRecipient $to)
     {
         $serialised = json_encode($to);
-        MailingQueue::find($this->id)->update([
-            'recipients' => DB::raw("JSON_ARRAY_APPEND(`recipients`, '$', '$serialised');")
-        ]);
+        $id = $this->id;
+        Capsule::transaction(function () use ($serialised, $id) {
+            MailingQueue::find($id)->update([
+                'recipients' => Capsule::raw("JSON_ARRAY_APPEND(`recipients`, '$', '$serialised');")
+                ]);
+        });
     }
 
     /**
