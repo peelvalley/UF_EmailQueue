@@ -58,6 +58,11 @@ class MailingQueue extends Model
     {
         $recipients = $this->recipients;
         $recipients[] = $to;
+        Debug::debug('recipients: ', [
+            $to,
+            $recipients,
+            $this->recipients,
+        ]);
         $this->update(['recipients'=> $recipients]);
     }
 
