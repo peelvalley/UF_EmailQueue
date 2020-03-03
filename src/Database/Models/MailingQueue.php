@@ -56,7 +56,7 @@ class MailingQueue extends Model
      */
     public function addRecipient(EmailRecipient $to)
     {
-        $recipients = $mq->recipients;
+        $recipients = $this->recipients;
         $recipients[] = $to;
         Debug::debug('recipients: ', [
             $to,
