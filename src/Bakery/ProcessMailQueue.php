@@ -47,6 +47,8 @@ class ProcessMailQueue extends BaseCommand
             $completed = $queueCount - $remaining +1;
             $this->io->writeln("Sending item {$completed} of {$queueCount}");
 
+            $itemParams = isset($mailItem->data['params']) ? $mailItem->data['params'] : [];
+
             try {
                 // Create and send email
                 $message = (new TwigMailMessage($this->ci->view, $mailItem->template))
@@ -65,7 +67,7 @@ class ProcessMailQueue extends BaseCommand
                                         $paramInfo['functionParams']
                                         )
                                 ];
-                            }, $mailItem->data['params']) ?? []
+                            }, $itemParams)
                         )
                     );
 
