@@ -61,6 +61,11 @@ class MailingQueue extends Model
         $this->update(['recipients'=> $recipients]);
     }
 
+    public function setRecipients(EmailRecipient ...$recipients)
+    {
+        $this->update(['recipients'=> $recipients]);
+    }
+
     /**
      * Get all recipient.
      */
