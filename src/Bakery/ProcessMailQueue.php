@@ -93,7 +93,7 @@ class ProcessMailQueue extends BaseCommand
                         $phpMailer->addStringAttachment($pdf->output(NULL, 'S'), $attachment['filename']);
                     } else if ($attachment['type'] == 'upload') {
                         $upload_id = $attachment['upload_id'];
-                        $upload = $classMapper->$classMapper->staticMethod('upload', 'find', $upload_id);
+                        $upload = $classMapper->staticMethod('upload', 'find', $upload_id);
                         if(!$upload) {
                             throw new \Exception("Upload {$upload_id} not found");
                         }
