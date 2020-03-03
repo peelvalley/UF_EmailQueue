@@ -61,7 +61,7 @@ class MailingQueue extends Model
 
         $mq = $this;
         //Capsule::transaction(function () use ($serialised, $mq) {
-            $mq->forceUpdate([
+            $mq->forceFill([
                 'recipients' => Capsule::raw("JSON_ARRAY_APPEND(`recipients`, '$', '$serialised');")
                 ]);
             $mq->save();
