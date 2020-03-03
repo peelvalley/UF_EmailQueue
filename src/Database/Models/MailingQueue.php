@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Builder;
 use UserFrosting\Sprinkle\Core\Database\Models\Model;
 Use UserFrosting\Sprinkle\EmailQueue\Mail\EmailRecipient;
 use Illuminate\Database\Capsule\Manager as Capsule;
+use \UserFrosting\Sprinkle\Core\Facades\Debug;
+
 
 
 class MailingQueue extends Model
@@ -55,13 +57,15 @@ class MailingQueue extends Model
     public function addRecipient(EmailRecipient $to)
     {
         $serialised = json_encode($to);
+        Debug::debug("recipient added: $serialised");
+
         $mq = $this;
-        Capsule::transaction(function () use ($serialised, $mq) {
+        //Capsule::transaction(function () use ($serialised, $mq) {
             $mq->update([
                 'recipients' => Capsule::raw("JSON_ARRAY_APPEND(`recipients`, '$', '$serialised');")
                 ]);
             $mq->save();
-        });
+        //});
     }
 
     /**
