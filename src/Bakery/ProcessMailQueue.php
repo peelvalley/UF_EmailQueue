@@ -70,7 +70,7 @@ class ProcessMailQueue extends BaseCommand
                     );
 
                 foreach ($mailItem->getRecipients() as $recipient) {
-                    $message >addEmailRecipient($recipient);
+                    $message->addEmailRecipient($recipient);
                 }
 
                 foreach ($mailItem->attachments as $attachment) {
