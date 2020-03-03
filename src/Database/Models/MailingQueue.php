@@ -58,7 +58,7 @@ class MailingQueue extends Model
     {
         $recipients = $mq->recipients;
         $recipients[] = $to;
-        $mq->update(['recipients'=> $recipients]);
+        $this->update(['recipients'=> $recipients]);
     }
 
     /**
