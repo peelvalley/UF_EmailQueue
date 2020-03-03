@@ -58,11 +58,11 @@ class MailingQueue extends Model
     {
         $serialised = json_encode($to);
         Debug::debug("recipient added: $serialised");
-
+        $db = $this->ci->db;
         $mq = $this;
         //Capsule::transaction(function () use ($serialised, $mq) {
             $mq->forceFill([
-                'recipients' => Capsule::raw("JSON_ARRAY_APPEND(`recipients`, '$', '$serialised');")
+                'recipients' => $db::raw("JSON_ARRAY_APPEND(`recipients`, '$', '$serialised');")
                 ]);
             $mq->save();
         //});
