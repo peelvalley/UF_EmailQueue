@@ -61,6 +61,7 @@ class MailingQueue extends Model
         Capsule::transaction(function () use ($serialised, $id) {
            Capsule::raw("UPDATE `mailing_queue` SET recipients = JSON_ARRAY_APPEND(`recipients`, '$', '$serialised') WHERE id=$id;");
         });
+        $this->refresh();
     }
 
     /**
