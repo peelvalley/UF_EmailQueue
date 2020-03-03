@@ -65,6 +65,7 @@ class MailingQueue extends Model
                 'recipients' => $db->raw("JSON_ARRAY_APPEND(`recipients`, '$', '$serialised');")
                 ]);
             $mq->save();
+            Debug::debug("saved");
         //});
     }
 
