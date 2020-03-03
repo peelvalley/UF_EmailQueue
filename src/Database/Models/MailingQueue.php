@@ -57,16 +57,10 @@ class MailingQueue extends Model
     public function addRecipient(EmailRecipient $to)
     {
         $serialised = json_encode($to);
-        Debug::debug("recipient added: $serialised");
-        $db = $this->ci->db;
-        $mq = $this;
-        //Capsule::transaction(function () use ($serialised, $mq) {
-            $mq->forceFill([
-                'recipients' => $db->raw("JSON_ARRAY_APPEND(`recipients`, '$', '$serialised');")
-                ]);
-            $mq->save();
-            Debug::debug("saved");
-        //});
+        $id = $this->id;
+        Capsule::transaction(function () use ($serialised, $id) {
+           Capsule::raw("UPDATE `mailing_queue` SET recipients = JSON_ARRAY_APPEND(`recipients`, '$', '$serialised') WHERE id=$id;");
+        });
     }
 
     /**
