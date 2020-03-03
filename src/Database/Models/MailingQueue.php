@@ -58,9 +58,11 @@ class MailingQueue extends Model
     {
         $serialised = json_encode($to);
         $id = $this->id;
-            $query = "UPDATE `mailing_queue` SET recipients = JSON_ARRAY_APPEND(`recipients`, '$', '$serialised') WHERE id=$id;";
-            Debug::debug('query', [$query]);
-           Capsule::raw($query);
+        $this->update('recipients',  Capsule::raw("JSON_ARRAY_APPEND(`recipients`, '$', '$serialised')"));
+        $this->save();
+        //     $query = "UPDATE `mailing_queue` SET recipients = JSON_ARRAY_APPEND(`recipients`, '$', '$serialised') WHERE id=$id;";
+        //     Debug::debug('query', [$query]);
+        //    Capsule::raw($query);
         $this->refresh();
     }
 
