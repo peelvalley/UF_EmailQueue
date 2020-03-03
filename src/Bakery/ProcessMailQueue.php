@@ -49,7 +49,7 @@ class ProcessMailQueue extends BaseCommand
             $this->io->writeln("Sending item {$completed} of {$queueCount}");
 
             $itemParams = (isset($mailItem->data) && isset($mailItem->data['params'])) ? $mailItem->data['params'] : [];
-            Debug::debug('itemParams'. print_r($itemParams, TRUE));
+            Debug::debug('itemParams '. print_r($itemParams, TRUE));
 
             try {
                 // Create and send email
@@ -60,7 +60,7 @@ class ProcessMailQueue extends BaseCommand
 
                     ] : $config['address_book.admin'])
                     ->addParams(
-                        array_merge($mailItem->data, ... array_map(function ($paramInfo) use ($classMapper) {
+                        array_merge($mailItem->data ?? [], ... array_map(function ($paramInfo) use ($classMapper) {
                                 return [
                                     $paramInfo['paramName'] => call_user_func_array(
                                         array(
@@ -69,7 +69,7 @@ class ProcessMailQueue extends BaseCommand
                                         $paramInfo['functionParams']
                                         )
                                 ];
-                            }, $itemParams)
+                            }, $mailItem->data['params'] ?? [])
                         )
                     );
 
