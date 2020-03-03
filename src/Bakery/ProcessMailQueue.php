@@ -7,10 +7,11 @@ use Carbon\Carbon;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use UserFrosting\Sprinkle\Core\Mail\EmailRecipient;
 use UserFrosting\Sprinkle\Core\Mail\TwigMailMessage;
 use UserFrosting\System\Bakery\BaseCommand;
 use Spipu\Html2Pdf\Html2Pdf;
+use \UserFrosting\Sprinkle\Core\Facades\Debug;
+
 
 
 class ProcessMailQueue extends BaseCommand
@@ -47,7 +48,8 @@ class ProcessMailQueue extends BaseCommand
             $completed = $queueCount - $remaining +1;
             $this->io->writeln("Sending item {$completed} of {$queueCount}");
 
-            $itemParams = isset($mailItem->data['params']) ? $mailItem->data['params'] : [];
+            $itemParams = (isset($mailItem->data) && isset($mailItem->data['params'])) ? $mailItem->data['params'] : [];
+            Debug::debug('itemParams'. print_r($itemParams, TRUE));
 
             try {
                 // Create and send email
