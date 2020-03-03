@@ -60,7 +60,7 @@ class MailingQueue extends Model
         $id = $this->id;
         Capsule::transaction(function () use ($serialised, $id) {
             $query = "UPDATE `mailing_queue` SET recipients = JSON_ARRAY_APPEND(`recipients`, '$', '$serialised') WHERE id=$id;";
-            Debug::debug('query', $query);
+            Debug::debug('query', [$query]);
            Capsule::raw($query);
         });
         $this->refresh();
