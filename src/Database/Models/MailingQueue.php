@@ -66,6 +66,7 @@ class MailingQueue extends Model
      */
     public function getRecipients()
     {
+        Debug::debug('recipients: ', $this->recipients);
         return array_map(function ($r) {
             EmailRecipient::fromData($r);
         }, $this->recipients);
