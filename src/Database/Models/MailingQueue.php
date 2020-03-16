@@ -3,11 +3,8 @@
 
 namespace UserFrosting\Sprinkle\EmailQueue\Database\Models;
 
-use Illuminate\Database\Eloquent\Builder;
 use UserFrosting\Sprinkle\Core\Database\Models\Model;
 Use UserFrosting\Sprinkle\EmailQueue\Mail\EmailRecipient;
-use Illuminate\Database\Capsule\Manager as Capsule;
-use \UserFrosting\Sprinkle\Core\Facades\Debug;
 
 
 
