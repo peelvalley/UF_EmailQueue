@@ -8,6 +8,8 @@ use UserFrosting\Sprinkle\Core\Database\Migration;
 class MailingQueueTable extends Migration
 {
 
+    use HandlesJsonVirtualColumns;
+
     /**
     * {@inheritdoc}
     */
@@ -22,8 +24,8 @@ class MailingQueueTable extends Migration
                 $table->json('data')->nullable();
                 $table->json('metadata')->nullable();
                 $table->json('attachments')->nullable();
-                $table->string('to_email', 255)->virtualAs('`recipients` ->> "$[0].email"');
-                $table->string('to_name', 255)->virtualAs('`recipients` ->> "$[0].name"');
+                $table->string('to_email', 255)->virtualAs($this->jsonValueExpression('to', '$.email'));
+                $table->string('to_name', 255)->virtualAs($this->jsonValueExpression('to', '$.name'));
 
                 $table->index('to_email');
                 $table->index('to_name');
