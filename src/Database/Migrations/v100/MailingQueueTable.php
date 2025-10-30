@@ -4,6 +4,7 @@ namespace UserFrosting\Sprinkle\EmailQueue\Database\Migrations\v100;
 
 use Illuminate\Database\Schema\Blueprint;
 use UserFrosting\Sprinkle\Core\Database\Migration;
+use UserFrosting\Sprinkle\EmailQueue\Database\Concerns\HandlesJsonVirtualColumns;
 
 class MailingQueueTable extends Migration
 {
